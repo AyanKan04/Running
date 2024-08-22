@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public ParticleSystem winEffect;
+
     public float speed = 5f;
     private float originalSpeed;
 
@@ -40,12 +42,14 @@ public class PlayerMovement : MonoBehaviour
     private Coroutine shieldCoroutine;
     public float shieldDuration = 5f;
 
+    public static bool unlockMap = false;
 
     private void Awake()
-    {
+    {        
         controller = GetComponent<CharacterController>();
         originalSpeed = speed;
         isShield = false;
+        unlockMap = false;
     }
 
     private void FixedUpdate()
@@ -55,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
         controller.Move(direction * Time.deltaTime);
+        
     }
 
 
@@ -175,12 +180,21 @@ public class PlayerMovement : MonoBehaviour
         {
             ActivateShield();
         }
-        else if (other.gameObject.CompareTag("Obstacle") && !isShield)
+        else if (other.gameObject.CompareTag("Obstacle") && !isShield && !UIManager.isSaveMe || other.gameObject.CompareTag("DeadZone"))
         {
             PlayerManager.gameOver = true;
             AudioManager.instance.PlaySFX("Game Over Effect");
             Time.timeScale = 0f;
         }
+
+        if (other.gameObject.CompareTag("WinGame"))
+        {
+            PlayerManager.isWinGame = true;
+            AudioManager.instance.PlaySFX("Win");
+            unlockMap = true;
+            Time.timeScale = 0f;            
+        }
+
     }
 
     private void ActivateShield()

@@ -12,7 +12,7 @@ public class Coin : MonoBehaviour
         transform.Rotate(50 * Time.deltaTime, 0, 0);
         if (destroyCoin)
         {
-            transform.position += new Vector3(-6*Time.deltaTime, 8*Time.deltaTime, 0);
+            transform.position += new Vector3(10 * Time.deltaTime, 20 * Time.deltaTime, 0);
             if (transform.position.y >= 4)
             {
                 Destroy(gameObject);
@@ -24,6 +24,7 @@ public class Coin : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             PlayerManager.TakeCoin(1);
+            UIManager.TakeCoinShop(1);
             destroyCoin = true;
             Debug.Log("Coin: " + PlayerManager.coin);
             AudioManager.instance.PlaySFX("Pick Coin");

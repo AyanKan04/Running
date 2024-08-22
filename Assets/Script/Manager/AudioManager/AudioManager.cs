@@ -53,12 +53,11 @@ public class AudioManager : MonoBehaviour
 
     private void PlayMusicForCurrentScene()
     {
-        string sceneName = SceneManager.GetActiveScene().name;
-        if (sceneName == "Menu")
+        if (TileManager.currentScene == "Menu")
         {
             PlayMusic("Menu Theme");
         }
-        else if (sceneName == "Play")
+        else
         {
             PlayMusic("Main Theme");
         }
