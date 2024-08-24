@@ -6,7 +6,6 @@ public class ShieldEffect : MonoBehaviour
 {
     public GameObject activeShield;
 
-    // Update is called once per frame
     void Update()
     {
         activeShield.transform.Rotate(0, 360 * Time.deltaTime, 0);
